@@ -21,12 +21,15 @@ RUN cp spark-2.4.6-bin-hadoop2.7/conf/spark-env.sh.template \
 RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.3.tar.gz && \
     tar -xvzf elasticsearch-6.2.3.tar.gz
 
-RUN apt-get update && apt-get install -y python2.7 git
-RUN git clone https://github.com/pypa/setuptools.git && \
-    python setuptools/bootstrap.py && \
-    python setuptools/setup.py install && \
-    easy_install pip && \
-    pip install elasticsearch && \
+RUN apt-get update && apt-get install -y python2.7 python 3.8 git
+RUN git clone https://github.com/pypa/setuptools.git
+RUN cd setuptools && \
+    python3 bootstrap.py && \
+    python3 setup.py install && \
+    cd ..
+
+RUN easy_install pip
+RUN pip install elasticsearch && \
     pip install --user numpy && \
     pip install --user pyspark && \
     pip install --user requests && \
